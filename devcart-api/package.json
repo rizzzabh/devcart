@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.1"
+  },
+  "name": "devcart-api",
+  "version": "1.0.0",
+  "description": "nothing much",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "i don;t know"
+  },
+  "author": "Rishabh Mishra",
+  "license": "ISC"
+}
