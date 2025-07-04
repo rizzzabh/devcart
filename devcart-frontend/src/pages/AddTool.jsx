@@ -14,23 +14,42 @@ export default function AddTool() {
   const [loading, setLoading] = useState(false);
   const { token } = useAuth();
   const navigate = useNavigate();
-
+  const [imageFile, setImageFile] = useState(null);
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleImageUpload = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await fetch("http://localhost:5050/api/upload", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    const data = await res.json();
+    return data.imageUrl;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+      let imageUrl = "";
+      if (imageFile) {
+        imageUrl = await handleImageUpload(imageFile);
+      }
       const res = await fetch("http://localhost:5050/api/tool/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, image: imageUrl }),
       });
 
       const data = await res.json();
@@ -39,7 +58,7 @@ export default function AddTool() {
         toast.error(data.message || "Failed to add tool");
       } else {
         toast.success("Tool added successfully");
-        navigate("/");
+        navigate("/home");
       }
     } catch (err) {
       toast.error("Something went wrong");
@@ -76,11 +95,9 @@ export default function AddTool() {
           className="w-full border p-2"
         />
         <input
-          name="image"
-          placeholder="Image URL"
-          value={form.image}
-          onChange={handleChange}
-          className="w-full border p-2"
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImageFile(e.target.files[0])}
         />
         <input
           name="tags"

@@ -7,7 +7,7 @@ export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useAuth();
+  const { setUser, setToken } = useAuth(); // <-- Add setToken
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,9 +29,10 @@ export default function Login() {
       } else {
         toast.success("Login successful");
         setUser(data.user);
+        setToken(data.token); // <-- Add this line!
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
+        navigate("/home"); // or your desired route
       }
     } catch (err) {
       toast.error("Something went wrong");

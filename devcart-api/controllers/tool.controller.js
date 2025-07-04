@@ -19,3 +19,13 @@ export const addTool = async (req, res) => {
     res.status(500).json({ message: "Failed to add tool" });
   }
 };
+
+
+export const getAllTools = async (req, res) => {
+  try {
+    const tools = await Tool.find().populate("creator", "name");
+    res.status(200).json(tools);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch tools" });
+  }
+};
