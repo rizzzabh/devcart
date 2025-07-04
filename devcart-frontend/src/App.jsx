@@ -11,10 +11,10 @@ import Login from "./pages/Login.jsx";
 import AddTool from "./pages/AddTool.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Home from "./pages/Home.jsx";
+import Landing from "./pages/Landing.jsx";
 
 function AppContent() {
   const location = useLocation();
-  // Hide Navbar on login and register pages
   const hideNavbar =
     location.pathname === "/login" || location.pathname === "/register";
 
@@ -22,7 +22,7 @@ function AppContent() {
     <>
       {!hideNavbar && <Navbar />}
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
