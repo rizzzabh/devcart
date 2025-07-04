@@ -21,7 +21,7 @@ const ToolSchema = new mongoose.Schema(
       required: true,
     },
     creator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    likes: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

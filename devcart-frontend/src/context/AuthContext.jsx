@@ -12,8 +12,17 @@ const getInitialUser = () => {
   }
 };
 
+const getInitialToken = () => {
+  try {
+    return localStorage.getItem("token") || null;
+  } catch {
+    return null;
+  }
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(getInitialUser);
+  const [token, setToken] = useState(getInitialToken);
 
   useEffect(() => {
     if (user) {
@@ -23,11 +32,18 @@ export const AuthProvider = ({ children }) => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }, [token]);
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, token, setToken }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
 export const useAuth = () => useContext(AuthContext);

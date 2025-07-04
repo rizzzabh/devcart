@@ -49,11 +49,12 @@ export const login = async (req, res) => {
         .status(400)
         .json({ message: "User does not exist , use a valid login email" });
 
+    const match = await bcrypt.compare(password, user.password);
+
     if (!match)
       return res.status(400).json({
         message: "Password does not match , use a valid login password",
       });
-
     const token = jwt.sign(
       { _id: user._id, email: user.email },
       process.env.JWT_SECRET_KEY,
