@@ -3,10 +3,28 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { toast } from "react-toastify";
 
 function ToolCard({ tool, onUpdate }) {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [loading, setLoading] = useState(false);
   const [localTool, setLocalTool] = useState(tool);
   const isLiked = user && localTool.likes.includes(user._id);
+
+  const handleBuy = async () => {
+    try {
+      const res = await fetch("http://localhost:5050/api/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ toolId: tool._id, price: tool.price }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Purchase failed");
+      toast.success("Tool purchased!");
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
 
   const handleLike = async (e) => {
     e.preventDefault();
@@ -75,6 +93,12 @@ function ToolCard({ tool, onUpdate }) {
           } ${loading ? "opacity-50 cursor-not-allowed" : "hover:opacity-80"}`}
         >
           ❤️ {localTool.likes.length}
+        </button>
+        <button
+          onClick={handleBuy}
+          className="bg-green-500 text-white px-3 py-1 rounded mt-2"
+        >
+          Buy
         </button>
       </div>
     </div>

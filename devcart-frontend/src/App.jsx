@@ -13,6 +13,8 @@ import Navbar from "./components/Navbar.jsx";
 import Home from "./pages/Home.jsx";
 import Landing from "./pages/Landing.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
+import MyOrders from "./pages/MyOrders.jsx";
+import AdminOrders from "./pages/AdminOrders.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -37,6 +39,8 @@ function AppContent() {
         <Route path="/home" element={<Home />} />
         <Route path="/add" element={<AddTool />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/admin-orders" element={<AdminOrders />} />
       </Routes>
     </>
   );

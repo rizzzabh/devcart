@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import authRoutes from "./routes/auth.route.js";
 import toolRoutes from "./routes/tool.route.js";
 import uploadRoute from "./routes/upload.route.js";
+import orderRoutes from "./routes/order.route.js";
 import cors from "cors";
 
 dotenv.config();
@@ -15,6 +16,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/tool", toolRoutes);
 app.use("/api/upload", uploadRoute);
+app.use("/api/order", orderRoutes);
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {

@@ -33,6 +33,16 @@ export default function Navbar() {
                 Admin
               </Link>
             )}
+            {user && (
+              <Link to="/my-orders" className="px-3">
+                My Orders
+              </Link>
+            )}
+            {user?.role === "admin" && (
+              <Link to="/admin-orders" className="px-3 text-blue-500">
+                Admin Orders
+              </Link>
+            )}
           </>
         )}
       </div>
