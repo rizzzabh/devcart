@@ -56,7 +56,7 @@ export const login = async (req, res) => {
         message: "Password does not match , use a valid login password",
       });
     const token = jwt.sign(
-      { _id: user._id, email: user.email },
+      { _id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET_KEY,
       { expiresIn: "7d" }
     );
@@ -64,7 +64,12 @@ export const login = async (req, res) => {
     res.status(200).json({
       message: "Logging in successful",
       token,
-      user: { _id: user._id, name: user.name, email: user.email },
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (error) {
     res.status(400).json({ message: "Login failed" });

@@ -84,3 +84,13 @@ export const toggleLike = async (req, res) => {
     res.status(500).json({ message: "Failed to toggle like" });
   }
 };
+
+export const deleteToolByAdmin = async (req, res) => {
+  try {
+    const tool = await Tool.findByIdAndDelete(req.params.id);
+    if (!tool) return res.status(404).json({ message: "Tool not found" });
+    res.status(202).json({ message: "Tool deleted by Admin." });
+  } catch (error) {
+    res.status(401).json({ message: "ERROR deleting tool" });
+  }
+};

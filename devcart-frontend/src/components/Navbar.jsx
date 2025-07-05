@@ -14,7 +14,7 @@ export default function Navbar() {
 
   return (
     <nav className="p-4 border-b flex justify-between">
-      <Link to="/">Home</Link>
+      <Link to={user ? "/home" : "/"}>Home</Link>
       <div className="space-x-4">
         {!user ? (
           <>
@@ -28,6 +28,11 @@ export default function Navbar() {
             <Link to="/add-tool" className="px-3">
               Add Tool
             </Link>
+            {user?.role === "admin" && (
+              <Link to="/admin" className="text-blue-500">
+                Admin
+              </Link>
+            )}
           </>
         )}
       </div>

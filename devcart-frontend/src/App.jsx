@@ -12,6 +12,7 @@ import AddTool from "./pages/AddTool.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Home from "./pages/Home.jsx";
 import Landing from "./pages/Landing.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function AppContent() {
         />
         <Route path="/home" element={<Home />} />
         <Route path="/add" element={<AddTool />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </>
   );
