@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/AdminDashboard.jsx";
 import MyOrders from "./pages/MyOrders.jsx";
 import AdminOrders from "./pages/AdminOrders.jsx";
 import EditTool from "./pages/EditTool.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function AppContent() {
         <Route path="/my-orders" element={<MyOrders />} />
         <Route path="/admin-orders" element={<AdminOrders />} />
         <Route path="/edit/:id" element={<EditTool />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

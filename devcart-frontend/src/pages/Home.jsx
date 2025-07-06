@@ -8,6 +8,8 @@ export default function Home() {
   const [tools, setTools] = useState([]);
   const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
 
   // Fetch tags from backend
   useEffect(() => {
@@ -24,18 +26,19 @@ export default function Home() {
     fetchTags();
   }, []);
 
-  // Fetch tools based on search and selected tag
+  // Fetch tools based on search, selected tag, and page
   const fetchTools = async () => {
     try {
       setLoading(true);
       let url = `http://localhost:5050/api/tool?search=${encodeURIComponent(
         searchTerm
-      )}`;
+      )}&page=${page}`;
       if (selectedTag) url += `&tag=${encodeURIComponent(selectedTag)}`;
       const res = await fetch(url);
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to fetch");
-      setTools(data);
+      setTools(data.tools);
+      setPages(data.pages || 1);
     } catch (err) {
       toast.error(err.message || "Failed to fetch tools");
     } finally {
@@ -43,14 +46,18 @@ export default function Home() {
     }
   };
 
-  // Debounce search and tag filtering
+  // Debounce search and tag filtering, reset to page 1 on search/tag change
+  useEffect(() => {
+    setPage(1);
+  }, [searchTerm, selectedTag]);
+
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       fetchTools();
     }, 500);
     return () => clearTimeout(delayDebounce);
     // eslint-disable-next-line
-  }, [searchTerm, selectedTag]);
+  }, [searchTerm, selectedTag, page]);
 
   return (
     <div className="max-w-5xl mx-auto p-4">
@@ -84,11 +91,40 @@ export default function Home() {
       ) : tools.length === 0 ? (
         <p>No tools available</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {tools.map((tool) => (
-            <ToolCard key={tool._id} tool={tool} onUpdate={fetchTools} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {tools.map((tool) => (
+              <ToolCard key={tool._id} tool={tool} onUpdate={fetchTools} />
+            ))}
+          </div>
+          <div className="flex justify-center mt-6 space-x-2">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="px-3 py-1 border rounded disabled:opacity-50"
+            >
+              Prev
+            </button>
+            {[...Array(pages)].map((_, idx) => (
+              <button
+                key={idx + 1}
+                onClick={() => setPage(idx + 1)}
+                className={`px-3 py-1 border rounded ${
+                  page === idx + 1 ? "bg-blue-500 text-white" : ""
+                }`}
+              >
+                {idx + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => setPage((p) => Math.min(pages, p + 1))}
+              disabled={page === pages}
+              className="px-3 py-1 border rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

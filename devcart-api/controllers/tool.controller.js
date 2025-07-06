@@ -22,7 +22,9 @@ export const addTool = async (req, res) => {
 
 export const getAllTools = async (req, res) => {
   try {
-    const { search, tag } = req.query;
+    const { search, tag, page = 1 } = req.query;
+    const limit = 6;
+    const skip = (parseInt(page) - 1) * limit;
 
     const query = {};
 
@@ -34,11 +36,20 @@ export const getAllTools = async (req, res) => {
       query.tags = { $regex: tag, $options: "i" };
     }
 
+    const total = await Tool.countDocuments(query);
+
     const tools = await Tool.find(query)
       .populate("creator", "name")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
-    res.status(200).json(tools);
+    res.status(200).json({
+      tools,
+      total,
+      page: parseInt(page),
+      pages: Math.ceil(total / limit),
+    });
   } catch (err) {
     res.status(500).json({ message: "Error fetching tools" });
   }
