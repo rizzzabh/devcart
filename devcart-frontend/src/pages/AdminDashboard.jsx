@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -56,6 +57,12 @@ export default function AdminDashboard() {
             >
               Delete
             </button>
+            <Link
+              to={`/edit/${tool._id}`}
+              className="text-blue-500 text-sm underline"
+            >
+              Edit
+            </Link>
           </div>
         ))}
       </div>
