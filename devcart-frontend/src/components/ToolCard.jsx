@@ -71,7 +71,7 @@ function ToolCard({ tool, onUpdate }) {
   // For demo: fallback for missing fields
   const rating = tool.rating || 4.8;
   const reviews = tool.reviews || 0;
-  const author = tool.author || "Unknown";
+  const author = tool.creator.name || "Unknown";
   const badge = tool.badge;
   const originalPrice = tool.originalPrice;
   const category = Array.isArray(localTool.tags)

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { toast } from "react-toastify";
 import { Package, Calendar, IndianRupee } from "lucide-react";
-
+import Footer from "../components/Footer.jsx";
 export default function MyOrders() {
   const { token } = useAuth();
   const [orders, setOrders] = useState([]);
@@ -107,6 +107,7 @@ export default function MyOrders() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

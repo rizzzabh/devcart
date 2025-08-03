@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import Notification from "../models/Notification.js";
+import { User } from "../models/User.js";
 import { sendNotification, sendAdminNotification } from "../index.js";
 
 // Get user notifications
@@ -50,6 +52,8 @@ export const createNotification = async (
   link = null
 ) => {
   try {
+    console.log("Creating notification for user:", recipientId);
+
     const notification = new Notification({
       recipient: recipientId,
       title,
@@ -76,17 +80,29 @@ export const createAdminNotification = async (
   type = "admin"
 ) => {
   try {
-    const notification = {
-      title,
-      message,
-      type,
-      timestamp: new Date(),
-    };
 
-    // Send real-time notification to all admins
-    sendAdminNotification(notification);
+    // Find all admin users
+    const adminUsers = await User.find({ role: "admin" });
+    console.log("Found", adminUsers.length, "admin users");
 
-    return notification;
+    // Create notifications for all admins
+    const notifications = [];
+    for (const admin of adminUsers) {
+      const notification = new Notification({
+        recipient: admin._id,
+        title,
+        message,
+        type,
+      });
+
+      await notification.save();
+      notifications.push(notification);
+
+      // Send real-time notification to each admin individually
+      sendNotification(admin._id, notification);
+    }
+
+    return notifications;
   } catch (error) {
     console.error("Error creating admin notification:", error);
   }

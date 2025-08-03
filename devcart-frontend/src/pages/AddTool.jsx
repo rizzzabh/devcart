@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import { Plus } from "lucide-react";
+import Footer from "../components/Footer.jsx";
 
 export default function AddTool() {
   const [form, setForm] = useState({
@@ -154,6 +155,7 @@ export default function AddTool() {
           </button>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 }

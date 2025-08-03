@@ -71,8 +71,8 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Mongo is connected : ) ");
-    app.listen(PORT, () => {
-      console.log("Server is working");
+    server.listen(PORT, () => {
+      console.log("Server is working with Socket.IO");
     });
   })
   .catch((err) => console.log("Database connection error"));

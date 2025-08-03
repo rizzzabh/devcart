@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Trash2, Edit3, Package } from "lucide-react";
-
+import Footer from "../components/Footer.jsx";
 export default function AdminDashboard() {
   const { user, token } = useAuth();
   const [tools, setTools] = useState([]);
@@ -87,6 +87,7 @@ export default function AdminDashboard() {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

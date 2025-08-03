@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext.jsx";
 import { Edit3 } from "lucide-react";
-
+import Footer from "../components/Footer.jsx";
 export default function EditTool() {
   const { id } = useParams();
   const { user, token } = useAuth();
@@ -151,6 +151,7 @@ export default function EditTool() {
           </button>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }
