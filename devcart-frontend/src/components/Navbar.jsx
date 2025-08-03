@@ -3,18 +3,12 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useState } from "react";
 import { Menu, Package, Bell, Plus, User } from "lucide-react";
 import NotificationDropdown from "./NotificationDropdown.jsx";
+import UserDropdown from "./UserDropdown.jsx";
 
 export default function Navbar() {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    setUser(null);
-    navigate("/");
-  };
 
   return (
     <nav className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800/50">
@@ -81,15 +75,7 @@ export default function Navbar() {
                   </>
                 )}
                 <NotificationDropdown />
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                  {user.name?.charAt(0) || <User className="h-4 w-4" />}
-                </div>
-                <button
-                  onClick={handleLogout}
-                  className="ml-2 bg-gray-800 hover:bg-gray-700 text-white px-3 py-2 rounded-lg transition-colors"
-                >
-                  Logout
-                </button>
+                <UserDropdown />
               </>
             )}
           </div>
@@ -162,18 +148,9 @@ export default function Navbar() {
                   </>
                 )}
                 <NotificationDropdown />
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                  {user.name?.charAt(0) || <User className="h-4 w-4" />}
+                <div className="flex justify-center">
+                  <UserDropdown />
                 </div>
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setMenuOpen(false);
-                  }}
-                  className="ml-2 bg-gray-800 hover:bg-gray-700 text-white px-3 py-2 rounded-lg transition-colors"
-                >
-                  Logout
-                </button>
               </>
             )}
           </div>

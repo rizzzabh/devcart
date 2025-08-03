@@ -32,18 +32,14 @@ app.use("/api/notifications", notificationRoutes);
 const connectedUsers = new Map();
 
 io.on("connection", (socket) => {
-  console.log("A User connected : ", socket.id);
-
   socket.on("authenticate", (userId) => {
     connectedUsers.set(userId, socket.id);
     socket.userId = userId;
-    console.log(`User ${userId} authenticated with socket ${socket.id}`);
   });
 
   socket.on("disconnect", () => {
     if (socket.userId) {
       connectedUsers.delete(socket.userId);
-      console.log(`User ${socket.userId} disconnected`);
     }
   });
 
@@ -53,7 +49,6 @@ io.on("connection", (socket) => {
   });
   socket.on("join-user-room", (userId) => {
     socket.join(`user-${userId}`);
-    console.log(`User ${userId} joined their room`);
   });
 });
 
@@ -70,7 +65,7 @@ export const sendAdminNotification = (notification) => {
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log("Mongo is connected : ) ");
+    console.log("Mongo is connected");
     server.listen(PORT, () => {
       console.log("Server is working with Socket.IO");
     });
