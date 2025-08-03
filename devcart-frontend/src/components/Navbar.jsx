@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useState } from "react";
-import { Menu, Package, Bell, Plus, User } from "lucide-react"; // Add this import
+import { Menu, Package, Bell, Plus, User } from "lucide-react";
+import NotificationDropdown from "./NotificationDropdown.jsx";
 
 export default function Navbar() {
   const { user, setUser } = useAuth();
@@ -79,13 +80,7 @@ export default function Navbar() {
                     </Link>
                   </>
                 )}
-                <button
-                  className="text-gray-300 hover:text-white p-2 rounded-lg transition-colors relative"
-                  title="Notifications"
-                >
-                  <Bell className="h-5 w-5" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                </button>
+                <NotificationDropdown />
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
                   {user.name?.charAt(0) || <User className="h-4 w-4" />}
                 </div>
@@ -166,13 +161,7 @@ export default function Navbar() {
                     </Link>
                   </>
                 )}
-                <button
-                  className="text-gray-300 hover:text-white p-2 rounded-lg transition-colors relative"
-                  title="Notifications"
-                >
-                  <Bell className="h-5 w-5" />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                </button>
+                <NotificationDropdown />
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
                   {user.name?.charAt(0) || <User className="h-4 w-4" />}
                 </div>

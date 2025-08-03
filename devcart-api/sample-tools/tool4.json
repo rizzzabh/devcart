@@ -1,0 +1,7 @@
+{
+  "title": "APICraft",
+  "description": "Comprehensive API development and testing platform that accelerates your API lifecycle. Features include automated API documentation generation, real-time testing, performance benchmarking, and security scanning. Supports REST, GraphQL, and WebSocket APIs with built-in mocking and staging environments. Includes advanced features like rate limiting simulation, load testing, and API versioning tools. Perfect for developers building microservices or full-stack applications. Features collaborative development tools with team sharing and real-time collaboration.",
+  "price": "24.99",
+  "tags": "API Development, REST, GraphQL, Testing, Documentation, Microservices, Performance, Collaboration, WebSocket",
+  "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500&h=300&fit=crop"
+} 

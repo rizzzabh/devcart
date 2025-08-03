@@ -17,6 +17,7 @@ import MyOrders from "./pages/MyOrders.jsx";
 import AdminOrders from "./pages/AdminOrders.jsx";
 import EditTool from "./pages/EditTool.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import { NotificationProvider } from "./context/NotificationContext.jsx";
 
 function AppContent() {
   const location = useLocation();
@@ -53,7 +54,9 @@ function AppContent() {
 export default function App() {
   return (
     <Router>
-      <AppContent />
+      <NotificationProvider>
+        <AppContent />
+      </NotificationProvider>
     </Router>
   );
 }

@@ -1,0 +1,7 @@
+{
+  "title": "DeployMaster",
+  "description": "Complete cloud deployment automation suite that streamlines your CI/CD pipeline. One-click deployments to AWS, Google Cloud, Azure, and Vercel. Features include automated testing, blue-green deployments, rollback capabilities, and real-time monitoring. Includes built-in security scanning, performance optimization, and cost management tools. Perfect for teams looking to automate their deployment process and reduce deployment time from hours to minutes. Supports Docker, Kubernetes, and serverless architectures.",
+  "price": "49.99",
+  "tags": "DevOps, Cloud Deployment, AWS, Azure, CI/CD, Docker, Kubernetes, Automation, Infrastructure",
+  "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&h=300&fit=crop"
+} 

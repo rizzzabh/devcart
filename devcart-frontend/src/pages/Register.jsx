@@ -26,7 +26,7 @@ export default function Register() {
       if (!res.ok) return alert(data.message || "Registration failed");
       setUser(data.user);
       localStorage.setItem("token", data.token);
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       alert("Something went wrong");
     } finally {
