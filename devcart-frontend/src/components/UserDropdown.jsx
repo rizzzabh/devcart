@@ -16,6 +16,7 @@ export default function UserDropdown() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,6 +28,19 @@ export default function UserDropdown() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, 300); // Increased delay to 300ms
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -46,21 +60,18 @@ export default function UserDropdown() {
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setTimeout(() => setIsOpen(false), 200)}
-        className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold hover:scale-110 transition-transform duration-200 cursor-pointer"
-      >
+    <div
+      className="relative"
+      ref={dropdownRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <button className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold hover:scale-110 transition-transform duration-200 cursor-pointer">
         {user.name?.charAt(0) || <User className="h-4 w-4" />}
       </button>
 
       {isOpen && (
-        <div
-          className="absolute right-0 mt-2 w-72 bg-gray-900/95 backdrop-blur-xl border border-gray-800/50 rounded-xl shadow-2xl z-50 transform transition-all duration-200 ease-out"
-          onMouseEnter={() => setIsOpen(true)}
-          onMouseLeave={() => setIsOpen(false)}
-        >
+        <div className="absolute right-0 mt-2 w-72 bg-gray-900/95 backdrop-blur-xl border border-gray-800/50 rounded-xl shadow-2xl z-50 transform transition-all duration-200 ease-out">
           {/* User Info Header */}
           <div className="p-4 border-b border-gray-800/50">
             <div className="flex items-center space-x-3">

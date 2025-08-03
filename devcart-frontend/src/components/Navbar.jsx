@@ -1,14 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useState } from "react";
-import { Menu, Package, Bell, Plus, User } from "lucide-react";
+import { Menu, Package, Bell, Plus, User, LogOut } from "lucide-react";
 import NotificationDropdown from "./NotificationDropdown.jsx";
 import UserDropdown from "./UserDropdown.jsx";
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/");
+    setMenuOpen(false);
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-lg border-b border-gray-800/50">
@@ -20,7 +28,7 @@ export default function Navbar() {
               <Package className="h-6 w-6 text-white" />
             </div>
             <Link
-              to={user ? "/home" : "/"}
+              to={user ? "/" : "/"}
               className="text-xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent"
             >
               DevCart
@@ -148,8 +156,29 @@ export default function Navbar() {
                   </>
                 )}
                 <NotificationDropdown />
-                <div className="flex justify-center">
-                  <UserDropdown />
+
+                {/* User Info Section */}
+                <div className="border-t border-gray-800 pt-3">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                      {user.name?.charAt(0) || <User className="h-4 w-4" />}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-white font-medium text-sm">
+                        {user.name}
+                      </p>
+                      <p className="text-gray-400 text-xs">{user.email}</p>
+                    </div>
+                  </div>
+
+                  {/* Logout Button */}
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors text-sm"
+                  >
+                    <LogOut className="h-4 w-4 mr-3" />
+                    Logout
+                  </button>
                 </div>
               </>
             )}
