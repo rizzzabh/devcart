@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ToolCard from "../components/ToolCard.jsx";
 import { toast } from "react-toastify";
-import { Search } from "lucide-react";
+import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import Footer from "../components/Footer.jsx";
 
 export default function Home() {
@@ -12,6 +12,13 @@ export default function Home() {
   const [tags, setTags] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
+  const [showAllTags, setShowAllTags] = useState(false);
+
+  // Popular tags to prioritize
+  const popularTags = [
+    'JavaScript', 'React', 'Node.js', 'Python', 
+    'CSS', 'Git', 'Docker', 'AWS', 'TypeScript', 'Vue'
+  ];
 
   // Fetch tags from backend
   useEffect(() => {
@@ -20,8 +27,14 @@ export default function Home() {
         const res = await fetch("http://localhost:5050/api/tool/tags");
         if (!res.ok) throw new Error("Failed to load tags");
         const data = await res.json();
-        setTags(data);
+        
+        // Sort tags: popular ones first, then others
+        const popularOnes = data.filter(tag => popularTags.includes(tag));
+        const others = data.filter(tag => !popularTags.includes(tag));
+        setTags([...popularOnes, ...others]);
       } catch (err) {
+        // Fallback to popular tags if API fails
+        setTags(popularTags);
         toast.error(err.message || "Failed to load tags");
       }
     };
@@ -61,6 +74,11 @@ export default function Home() {
     // eslint-disable-next-line
   }, [searchTerm, selectedTag, page]);
 
+  // Calculate how many tags to show
+  const maxVisibleTags = 8;
+  const visibleTags = showAllTags ? tags : tags.slice(0, maxVisibleTags);
+  const hasMoreTags = tags.length > maxVisibleTags;
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-900 to-blue-900/20">
       <div className="flex-1 px-4 py-8">
@@ -84,25 +102,51 @@ export default function Home() {
                 />
               </div>
             </div>
-            <div className="flex flex-wrap gap-2 mb-8 justify-center">
-              {tags.length === 0 ? (
-                <span className="text-gray-400 italic">No tags found</span>
-              ) : (
-                tags.map((tag) => (
+            
+            {/* Improved Tag Display */}
+            <div className="mb-8">
+              <div className="flex flex-wrap gap-2 justify-center mb-3">
+                {tags.length === 0 ? (
+                  <span className="text-gray-400 italic">No tags found</span>
+                ) : (
+                  visibleTags.map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() =>
+                        setSelectedTag(tag === selectedTag ? "" : tag)
+                      }
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                        selectedTag === tag
+                          ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
+                          : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50"
+                      }`}
+                    >
+                      {tag}
+                    </button>
+                  ))
+                )}
+              </div>
+              
+              {/* Show More/Less Button */}
+              {hasMoreTags && (
+                <div className="flex justify-center">
                   <button
-                    key={tag}
-                    onClick={() =>
-                      setSelectedTag(tag === selectedTag ? "" : tag)
-                    }
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                      selectedTag === tag
-                        ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
-                        : "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50"
-                    }`}
+                    onClick={() => setShowAllTags(!showAllTags)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-gray-700/50 text-gray-300 hover:bg-gray-600/50 border border-gray-600/50 transition-all"
                   >
-                    {tag}
+                    {showAllTags ? (
+                      <>
+                        <ChevronUp className="h-4 w-4" />
+                        Show Less
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="h-4 w-4" />
+                        Show {tags.length - maxVisibleTags} More Tags
+                      </>
+                    )}
                   </button>
-                ))
+                </div>
               )}
             </div>
           </div>
