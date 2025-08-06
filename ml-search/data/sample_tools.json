@@ -1,0 +1,26 @@
+{
+  "tools": [
+    {
+      "name": "Jest",
+      "description": "JavaScript testing framework",
+      "tags": ["testing", "javascript", "react"]
+    },
+    {
+      "name": "Postman",
+      "description": "API testing tool",
+      "tags": ["api", "testing", "rest"]
+    },
+    {
+      "name": "VS Code",
+      "description": "Code editor",
+      "tags": ["editor", "microsoft", "coding"]
+    }
+  ],
+  "search_patterns": [
+    {
+      "query": "react testing",
+      "relevant_tools": ["Jest", "React Testing Library"]
+    },
+    { "query": "api test", "relevant_tools": ["Postman", "Insomnia"] }
+  ]
+}
