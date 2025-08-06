@@ -49,25 +49,25 @@ export default function Home() {
     fetchTags();
   }, []);
 
-  //   // Fetch tools based on search, selected tag, and page
-  //   const fetchTools = async () => {
-  //     try {
-  //       setLoading(true);
-  //       let url = `http://localhost:5050/api/tool?search=${encodeURIComponent(
-  //         searchTerm
-  //       )}&page=${page}`;
-  //       if (selectedTag) url += `&tag=${encodeURIComponent(selectedTag)}`;
-  //       const res = await fetch(url);
-  //       const data = await res.json();
-  //       if (!res.ok) throw new Error(data.message || "Failed to fetch");
-  //       setTools(data.tools);
-  //       setPages(data.pages || 1);
-  //     } catch (err) {
-  //       toast.error(err.message || "Failed to fetch tools");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  // Fetch tools based on search, selected tag, and page
+  const fetchTools = async () => {
+    try {
+      setLoading(true);
+      let url = `http://localhost:5050/api/tool?search=${encodeURIComponent(
+        searchTerm
+      )}&page=${page}`;
+      if (selectedTag) url += `&tag=${encodeURIComponent(selectedTag)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to fetch");
+      setTools(data.tools);
+      setPages(data.pages || 1);
+    } catch (err) {
+      toast.error(err.message || "Failed to fetch tools");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Debounce search and tag filtering, reset to page 1 on search/tag change
   useEffect(() => {
