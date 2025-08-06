@@ -1,5 +1,17 @@
-# Logs
-logs
+# 🔧 Dependency directories
+node_modules/
+venv/
+.env
+.env.*
+
+# 🧱 Build and output files
+dist/
+build/
+dist-ssr/
+*.local
+
+# 🪵 Logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,19 +19,51 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# ⚙️ Operating system files
 .DS_Store
+Thumbs.db
+
+# 📝 IDE / Editor settings
+.vscode/
+!.vscode/extensions.json
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.venv
+
+# 🧪 Test output
+coverage/
+*.lcov
+
+# 🐍 Python bytecode and cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ❌ Miscellaneous
+*.tgz
+*.zip
+*.bak
+*.old
+
+# Docker
+*.pid
+*.pid.lock
+
+# 🔬 Jupyter Notebook checkpoints (if you happen to test models there)
+.ipynb_checkpoints/
+
+# 🔍 ESLint / Prettier caches
+.eslintcache
+.prettiercache
+
+# 💡 Local system config (Windows/Linux/macOS)
+*.log?
+*.tmp
+*.temp
+
+# Optional: Ignore data folder (for small-scale local testing)
+ml-search/data/
+!ml-search/data/sample_tools.json
