@@ -3,7 +3,7 @@ import ToolCard from "../components/ToolCard.jsx";
 import { toast } from "react-toastify";
 import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import Footer from "../components/Footer.jsx";
-
+//Home page modifications
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
@@ -16,8 +16,16 @@ export default function Home() {
 
   // Popular tags to prioritize
   const popularTags = [
-    'JavaScript', 'React', 'Node.js', 'Python', 
-    'CSS', 'Git', 'Docker', 'AWS', 'TypeScript', 'Vue'
+    "JavaScript",
+    "React",
+    "Node.js",
+    "Python",
+    "CSS",
+    "Git",
+    "Docker",
+    "AWS",
+    "TypeScript",
+    "Vue",
   ];
 
   // Fetch tags from backend
@@ -27,10 +35,10 @@ export default function Home() {
         const res = await fetch("http://localhost:5050/api/tool/tags");
         if (!res.ok) throw new Error("Failed to load tags");
         const data = await res.json();
-        
+
         // Sort tags: popular ones first, then others
-        const popularOnes = data.filter(tag => popularTags.includes(tag));
-        const others = data.filter(tag => !popularTags.includes(tag));
+        const popularOnes = data.filter((tag) => popularTags.includes(tag));
+        const others = data.filter((tag) => !popularTags.includes(tag));
         setTags([...popularOnes, ...others]);
       } catch (err) {
         // Fallback to popular tags if API fails
@@ -102,7 +110,7 @@ export default function Home() {
                 />
               </div>
             </div>
-            
+
             {/* Improved Tag Display */}
             <div className="mb-8">
               <div className="flex flex-wrap gap-2 justify-center mb-3">
@@ -126,7 +134,7 @@ export default function Home() {
                   ))
                 )}
               </div>
-              
+
               {/* Show More/Less Button */}
               {hasMoreTags && (
                 <div className="flex justify-center">
