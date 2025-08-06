@@ -1,0 +1,23 @@
+# Python virtual environment
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environment files
+.env
+
+# OS and editor files
+.DS_Store
+*.swp
+*.bak
+*.tmp
+.ipynb_checkpoints/
+
+# Log files
+*.log
+*.out
+
+# Data folder (optional, depending on your use)
+data/
+!data/sample_tools.json
