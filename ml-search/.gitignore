@@ -21,3 +21,6 @@ __pycache__/
 # Data folder (optional, depending on your use)
 data/
 !data/sample_tools.json
+
+clean_dataset.py
+query_to_tags_model.py
