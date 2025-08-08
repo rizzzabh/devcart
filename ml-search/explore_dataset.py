@@ -42,28 +42,8 @@ def explore_ai_tools_dataset():
                 print(f"Data type: {df[col].dtype}")
                 print(f"Min: {df[col].min()}, Max: {df[col].max()}")
         
-        # Tags analysis (if tags column exists)
-        if 'Tags' in df.columns:
-            print("\n=== Tags Analysis ===")
-            all_tags = []
-            for tags_str in df['Tags'].dropna():
-                if isinstance(tags_str, str):
-                    # Split tags (assuming comma-separated)
-                    tags = [tag.strip() for tag in tags_str.split(',')]
-                    all_tags.extend(tags)
-            
-            tag_counts = Counter(all_tags)
-            print(f"Total unique tags: {len(tag_counts)}")
-            print(f"Most common tags: {tag_counts.most_common(10)}")
+
         
-        # Categories analysis (if category column exists)
-        if 'Category' in df.columns:
-            print("\n=== Category Analysis ===")
-            category_counts = df['Category'].value_counts()
-            print(f"Total unique categories: {len(category_counts)}")
-            print(f"Top 10 categories: {category_counts.head(10)}")
-        
-        return df
         
     except Exception as e:
         print(f"❌ Error loading dataset: {e}")
