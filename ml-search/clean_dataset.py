@@ -7,11 +7,9 @@ import re
 def clean_ai_tools_dataset():
     """Clean and prepare the AI Tools dataset for training."""
     
-    print("=== Cleaning AI Tools Dataset ===\n")
     
     # Load dataset with low_memory=False to avoid warnings
     df = pd.read_csv('data/ai_tools_dataset.csv', low_memory=False)
-    print(f"📊 Original dataset: {df.shape}")
     
     # Select relevant columns
     relevant_columns = [
@@ -24,7 +22,6 @@ def clean_ai_tools_dataset():
     
     # Remove rows with missing essential data
     cleaned_df = cleaned_df.dropna(subset=['company_name', 'short_description', 'primary_task'])
-    print(f"📊 After removing missing data: {cleaned_df.shape}")
     
     # Clean text data
     def clean_text(text):
@@ -72,19 +69,16 @@ def clean_ai_tools_dataset():
         all_tasks.extend(tasks)
     
     task_counts = Counter(all_tasks)
-    print(f"\n📋 Total unique tasks: {len(task_counts)}")
-    print(f"🏆 Top 20 tasks: {task_counts.most_common(20)}")
+
     
     # Save cleaned dataset
     cleaned_df.to_csv('data/processed/ai_tools_clean.csv', index=False)
-    print(f"\n✅ Cleaned dataset saved to: data/processed/ai_tools_clean.csv")
     
     return cleaned_df
 
 def create_training_pairs(cleaned_df):
     """Create query-tag training pairs from the cleaned dataset."""
     
-    print("\n=== Creating Training Pairs ===\n")
     
     training_pairs = []
     
@@ -125,63 +119,18 @@ def create_training_pairs(cleaned_df):
                     'source': 'pros_to_tasks'
                 })
     
-    print(f"📊 Created {len(training_pairs)} training pairs")
     
-    # Save training pairs
     with open('data/processed/training_pairs.json', 'w') as f:
         json.dump(training_pairs, f, indent=2)
     
-    print(f"✅ Training pairs saved to: data/processed/training_pairs.json")
-    
-    # Show sample training pairs
-    print(f"\n📝 Sample Training Pairs:")
-    for i, pair in enumerate(training_pairs[:5]):
-        print(f"\n{i+1}. Query: '{pair['query'][:100]}...'")
-        print(f"   Tags: {pair['tags'][:5]}...")
-        print(f"   Source: {pair['source']}")
     
     return training_pairs
 
-def analyze_training_data(training_pairs):
-    """Analyze the created training data."""
-    
-    print("\n=== Training Data Analysis ===\n")
-    
-    # Analyze query lengths
-    query_lengths = [len(pair['query'].split()) for pair in training_pairs]
-    print(f"📏 Query length stats:")
-    print(f"   Average: {np.mean(query_lengths):.1f} words")
-    print(f"   Min: {min(query_lengths)} words")
-    print(f"   Max: {max(query_lengths)} words")
-    
-    # Analyze tag counts
-    tag_counts = [len(pair['tags']) for pair in training_pairs]
-    print(f"\n🏷️ Tag count stats:")
-    print(f"   Average: {np.mean(tag_counts):.1f} tags per query")
-    print(f"   Min: {min(tag_counts)} tags")
-    print(f"   Max: {max(tag_counts)} tags")
-    
-    # Analyze unique tags
-    all_tags = []
-    for pair in training_pairs:
-        all_tags.extend(pair['tags'])
-    
-    unique_tags = set(all_tags)
-    print(f"\n📋 Unique tags: {len(unique_tags)}")
-    print(f"🏆 Most common tags: {Counter(all_tags).most_common(10)}")
 
 if __name__ == "__main__":
-    # Clean the dataset
+
     cleaned_df = clean_ai_tools_dataset()
-    
-    # Create training pairs
+
     training_pairs = create_training_pairs(cleaned_df)
+ 
     
-    # Analyze the training data
-    analyze_training_data(training_pairs)
-    
-    print("\n=== Next Steps ===")
-    print("1. Review the cleaned dataset")
-    print("2. Examine training pairs quality")
-    print("3. Design the LSTM model architecture")
-    print("4. Prepare for model training")
