@@ -22,6 +22,6 @@ __pycache__/
 data/
 !data/sample_tools.json
 
-clean_dataset.py
 query_to_tags_model.py
 explore.ipynb
+clean.ipynb
