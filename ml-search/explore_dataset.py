@@ -6,8 +6,6 @@ from collections import Counter
 def explore_ai_tools_dataset():
     """Explore the AI Tools dataset to understand its structure and quality."""
     
-    print("=== AI Tools Dataset Exploration ===\n")
-    
     # Load the dataset
     try:
         df = pd.read_csv('data/ai_tools_dataset.csv')
@@ -46,7 +44,7 @@ def explore_ai_tools_dataset():
         
         
     except Exception as e:
-        print(f"❌ Error loading dataset: {e}")
+
         return None
 
 def compare_with_sample_tools():
@@ -61,8 +59,7 @@ def compare_with_sample_tools():
     print(f"Your sample tools: {len(sample_tools['tools'])}")
     print(f"AI Tools dataset: {len(pd.read_csv('data/ai_tools_dataset.csv'))}")
     
-    # Show sample tool structure
-    print("\nSample tool structure:")
+
     print(json.dumps(sample_tools['tools'][0], indent=2))
 
 if __name__ == "__main__":
@@ -71,8 +68,4 @@ if __name__ == "__main__":
     
     # Compare with your tools
     compare_with_sample_tools()
-    
-    print("\n=== Next Steps ===")
-    print("1. Review the data quality issues")
-    print("2. Plan data cleaning strategy")
-    print("3. Design training data structure")
+
