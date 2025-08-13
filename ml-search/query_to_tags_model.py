@@ -45,16 +45,13 @@ class QueryToTagsModel:
     def prepare_data(self, queries, tags_list):
         """Prepare data for training."""
         print("\n=== Preparing Data ===")
-        
-        # Fit tokenizer on queries
+  
         self.tokenizer.fit_on_texts(queries)
         print(f"📝 Vocabulary size: {len(self.tokenizer.word_index) + 1}")
         
-        # Convert queries to sequences
         sequences = self.tokenizer.texts_to_sequences(queries)
         X = pad_sequences(sequences, maxlen=self.max_len, padding='post', truncating='post')
         
-        # Prepare tags (multi-label)
         y = self.mlb.fit_transform(tags_list)
         print(f"🏷️ Number of unique tags: {len(self.mlb.classes_)}")
         print(f"📊 X shape: {X.shape}, y shape: {y.shape}")
