@@ -58,46 +58,46 @@ class QueryToTagsModel:
         
         return X, y
     
-#     def build_model(self, num_tags):
-#         """Build LSTM model for query-to-tags prediction."""
-#         print(f"\n=== Building LSTM Model ===")
-#         print(f"🏗️ Model architecture:")
-#         print(f"   - Input: {self.max_len} tokens")
-#         print(f"   - Embedding: {self.embedding_dim} dimensions")
-#         print(f"   - LSTM: {self.lstm_units} units")
-#         print(f"   - Output: {num_tags} tags")
+    def build_model(self, num_tags):
+        """Build LSTM model for query-to-tags prediction."""
+        print(f"\n=== Building LSTM Model ===")
+        print(f"🏗️ Model architecture:")
+        print(f"   - Input: {self.max_len} tokens")
+        print(f"   - Embedding: {self.embedding_dim} dimensions")
+        print(f"   - LSTM: {self.lstm_units} units")
+        print(f"   - Output: {num_tags} tags")
         
-#         model = Sequential([
-#             # Embedding layer
-#             Embedding(self.max_words, self.embedding_dim, input_length=self.max_len),
+        model = Sequential([
+            # Embedding layer
+            Embedding(self.max_words, self.embedding_dim, input_length=self.max_len),
             
-#             # Bidirectional LSTM layers
-#             Bidirectional(LSTM(self.lstm_units, return_sequences=True)),
-#             Dropout(0.3),
+            # Bidirectional LSTM layers
+            Bidirectional(LSTM(self.lstm_units, return_sequences=True)),
+            Dropout(0.3),
             
-#             Bidirectional(LSTM(self.lstm_units // 2)),
-#             Dropout(0.3),
+            Bidirectional(LSTM(self.lstm_units // 2)),
+            Dropout(0.3),
             
-#             # Dense layers
-#             Dense(256, activation='relu'),
-#             Dropout(0.3),
+            # Dense layers
+            Dense(256, activation='relu'),
+            Dropout(0.3),
             
-#             Dense(128, activation='relu'),
-#             Dropout(0.3),
+            Dense(128, activation='relu'),
+            Dropout(0.3),
             
-#             # Output layer (multi-label classification)
-#             Dense(num_tags, activation='sigmoid')
-#         ])
+            # Output layer (multi-label classification)
+            Dense(num_tags, activation='sigmoid')
+        ])
         
-#         # Compile model
-#         model.compile(
-#             optimizer='adam',
-#             loss='binary_crossentropy',
-#             metrics=['accuracy']
-#         )
+        # Compile model
+        model.compile(
+            optimizer='adam',
+            loss='binary_crossentropy',
+            metrics=['accuracy']
+        )
         
-#         print(f"✅ Model built successfully!")
-#         return model
+        print(f"✅ Model built successfully!")
+        return model
     
 #     def train_model(self, X, y, validation_split=0.2, epochs=50, batch_size=32):
 #         """Train the LSTM model."""
